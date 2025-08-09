@@ -1,13 +1,14 @@
+import { savePassword } from "./localStorageCrud.js";
 import generatePasswordLength from "./random_generator.js";
 
 // le nom du site
 let nomSiteElement = document.getElementById('nom-site')
 let nomSite;
 
-const nomSiteInputChange = nomSiteElement.addEventListener('change', (e) =>{
+/*const nomSiteInputChange = nomSiteElement.addEventListener('change', (e) =>{
     //console.log(e.target.value);
     nomSite = e.target.value
-})
+})*/
 
 //la taille du password
 let passLengthElement = document.getElementById('pass_length_input')
@@ -50,7 +51,7 @@ const symbCheckBoxChange = symbCheckBox.addEventListener('change', (e) => {
 // button genere
 const generateBouton = document.getElementById('generer')
 const motPasseParagraphe = document.getElementById('password')
-console.log(motPasseParagraphe);
+//console.log(motPasseParagraphe);
 
 const genererClick = generateBouton.addEventListener('click', (e) => {
     isMaj = majCheckBox.checked
@@ -59,14 +60,21 @@ const genererClick = generateBouton.addEventListener('click', (e) => {
     isSymb = symbCheckBox.checked
     //console.log(isMaj, isMin, isNum, isSymb);
     passLength = passLengthElement.value
+    nomSite = nomSiteElement.value
+    //console.log(nomSite);
+    
     
     const mot_passe = generatePasswordLength(passLength, isMaj, isMin, isNum, isSymb)
-    console.log(mot_passe);
+    //console.log(mot_passe);
     motPasseParagraphe.innerText = mot_passe
+    let response = savePassword(mot_passe, nomSite)
+    if (!response) {
+        alert("Echec d'enregistrement! Espace insufissant!")
+    }
 })
 
 
-nomSiteElement.removeEventListener('change',nomSiteInputChange)
+//nomSiteElement.removeEventListener('change',nomSiteInputChange)
 passLengthElement.removeEventListener('change',passLengthInputChange)
 /*majCheckBox.removeEventListener('change', majCheckBoxChange)
 minCheckBox.removeEventListener('change', minCheckBoxChange)
