@@ -33,4 +33,23 @@ const savePassword = (newMotDePasse, siteNom)=>{
     
 }
 
-export {savePassword}
+const getTotalSaved = ()=> {
+    if(localStorage){
+        let oldData = JSON.parse(localStorage.getItem('password-gen-history'))
+        return oldData
+    }
+}
+
+const deletePassword = (motDePass) =>{
+    if(localStorage){
+        let oldData = JSON.parse(localStorage.getItem('password-gen-history'))
+        if(! oldData === null && oldData.length > 0){
+            oldData.filter((elem) => elem.password !== motDePass)
+            localStorage.setItem('password-gen-history', JSON.stringify(
+                oldData
+            ))
+        }
+    }
+}
+
+export {savePassword, getTotalSaved, deletePassword}

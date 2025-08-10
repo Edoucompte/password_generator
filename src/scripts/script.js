@@ -1,4 +1,4 @@
-import { savePassword } from "./localStorageCrud.js";
+import { getTotalSaved, savePassword } from "./localStorageCrud.js";
 import generatePasswordLength from "./random_generator.js";
 
 // le nom du site
@@ -52,6 +52,7 @@ const symbCheckBoxChange = symbCheckBox.addEventListener('change', (e) => {
 const generateBouton = document.getElementById('generer')
 const motPasseParagraphe = document.getElementById('password')
 //console.log(motPasseParagraphe);
+let totalCompteursElemet = document.getElementById('total')
 
 const genererClick = generateBouton.addEventListener('click', (e) => {
     isMaj = majCheckBox.checked
@@ -75,11 +76,47 @@ const genererClick = generateBouton.addEventListener('click', (e) => {
     }
 
     // mis a jour des stats
-    let totalCompteursElemet = document.getElementById('total')
     console.log(totalCompteursElemet);
     totalCompteursElemet.innerHTML = response.length
     
 })
+
+// mis a jour compteurs et listes
+const mot_passes =getTotalSaved()
+totalCompteursElemet.innerText = mot_passes.length
+let savedDiv = document.getElementById('saved')
+if(mot_passes.length === 0){
+    savedDiv.innerHTML = `<p class="text-center my-6 text-gray-500">Aucun mot de passe sauvegardés</p>`
+} else{
+    savedDiv.innerHTML = ``
+    mot_passes.forEach(passwoerdObj => {
+        const date = new Date(passwoerdObj.date)
+        //console.log(date.)
+        const yy = date.getFullYear()
+        const mm = date.getMonth()
+        const dd = date.getDay()
+        console.log(yy, mm, dd);
+        
+        const passwordCard = `
+            <div class="rounded-md border-l-blue-400 border-l-4 p-4 m-3 flex justify-between ">
+                <div>
+                    <p>${passwoerdObj.site}</p>
+                    <p>Créé le ${dd}/${mm}/${yy}</p>
+                    <p>Force: 50/100</p>
+                </div>
+    
+                <div class="flex items-center gap-2">
+                    <button class="h-7 w-12 rounded-sm text-white bg-green-700">Copier</button>
+                    <button class="h-7 w-18 rounded-sm text-white bg-red-700">Supprimer</button>
+                </div>
+    
+            </div>
+        `
+        savedDiv.innerHTML += passwordCard
+        console.log(savedDiv);
+        
+    });
+}
 
 
 //nomSiteElement.removeEventListener('change',nomSiteInputChange)
