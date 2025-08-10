@@ -69,8 +69,16 @@ const genererClick = generateBouton.addEventListener('click', (e) => {
     motPasseParagraphe.innerText = mot_passe
     let response = savePassword(mot_passe, nomSite)
     if (!response) {
-        alert("Echec d'enregistrement! Espace insufissant!")
+        alert("Erreur innatendue")
+    } else{
+        //alert('Sauvegarder')
     }
+
+    // mis a jour des stats
+    let totalCompteursElemet = document.getElementById('total')
+    console.log(totalCompteursElemet);
+    totalCompteursElemet.innerHTML = response.length
+    
 })
 
 

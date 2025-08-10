@@ -13,7 +13,7 @@ const savePassword = (newMotDePasse, siteNom)=>{
                 }
             ]))
         } else{
-            oldData.add({
+            oldData.push({
                 'password': newMotDePasse,
                 'date': Date.now(),
                 'site': siteNom === "" ? ` __${oldData.length +1 }__` : siteNom, 
@@ -21,12 +21,12 @@ const savePassword = (newMotDePasse, siteNom)=>{
             console.log(oldData);
             
             
-            localStorage.setItem('password-gen-history', JSON.stringify([
+            localStorage.setItem('password-gen-history', JSON.stringify(
                 oldData
-            ]))
+            ))
         }
 
-        return true
+        return oldData
     }
     return false
     
